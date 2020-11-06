@@ -1,7 +1,4 @@
 
-//96326c24
-//http://www.omdbapi.com/?apikey=[yourkey]&
-
 const fetchData = async (searchTerm) => {
   const response = await axios.get('http://www.omdbapi.com/', {
     params: {
@@ -11,30 +8,24 @@ const fetchData = async (searchTerm) => {
       //t: 'Batman'
     }
   });
-  console.log(response.data);
+  //console.log(response.data);
+  return response.data.Search;
+  
 };
 
 const input = document.querySelector('input');
 
-//******* Make a reusable function for even ********* */
-const debounce = (callback, delay=1000) => {
-  let timeoutId;
-  return (...args) => {
-    if(timeoutId){
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(()=>{
-      callback.apply(null, args);
-    }, delay)
-  };
-};
-const onInput = e => {
- fetchData(e.target.value);
+const onInput = async e => {
+ const movies = await fetchData(e.target.value);
+ console.log(movies);
 }
 
 input.addEventListener('input', debounce(onInput, 500))
+
+
 //-------------------------------------------------
-//** Before make it reusable in debounce above */
+
+//** Before make it reusable in debounce  */
 // const onInput = e =>{
 //   if(timeoutId){
 //     clearTimeout(timeoutId);
@@ -44,3 +35,15 @@ input.addEventListener('input', debounce(onInput, 500))
 //   }, 1000)
 
 // }
+//******* Make a reusable function for even ********* */
+// const debounce = (callback, delay=1000) => {
+//   let timeoutId;
+//   return (...args) => {
+//     if(timeoutId){
+//       clearTimeout(timeoutId);
+//     }
+//     timeoutId = setTimeout(()=>{
+//       callback.apply(null, args);
+//     }, delay)
+//   };
+// };
