@@ -9,6 +9,9 @@ const fetchData = async (searchTerm) => {
     }
   });
   //console.log(response.data);
+  if(response.data.Error){
+    return [];
+  }
   return response.data.Search;
   
 };
