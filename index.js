@@ -15,15 +15,33 @@ const fetchData = async (searchTerm) => {
 };
 
 const input = document.querySelector('input');
-let timeoutId;
 
-const onInput = e =>{
-  if(timeoutId){
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(()=>{
-    fetchData(e.target.value);
-  }, 1000)
-  
+//******* Make a reusable function for even ********* */
+const debounce = (callback, delay=1000) => {
+  let timeoutId;
+  return (...args) => {
+    if(timeoutId){
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(()=>{
+      callback.apply(null, args);
+    }, delay)
+  };
+};
+const onInput = e => {
+ fetchData(e.target.value);
+
 }
-input.addEventListener('input', onInput)
+
+input.addEventListener('input', debounce(onInput, 500))
+//-------------------------------------------------
+//** Before make it reusable in debounce above */
+// const onInput = e =>{
+//   if(timeoutId){
+//     clearTimeout(timeoutId);
+//   }
+//   timeoutId = setTimeout(()=>{
+//     fetchData (e.target.value);
+//   }, 1000)
+
+// }
