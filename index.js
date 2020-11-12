@@ -1,20 +1,4 @@
 
-const fetchData = async (searchTerm) => {
-  const response = await axios.get('http://www.omdbapi.com/', {
-    params: {
-      apikey: '96326c24',
-      s: searchTerm
-      // i: 'tt08488'
-      //t: 'Batman'
-    }
-  });
-  //console.log(response.data);
-  if (response.data.Error) {
-    return [];
-  }
-  return response.data.Search;
-
-};
 
 createAutoComplete({
   root: document.querySelector('.autocomplete'),
@@ -24,6 +8,27 @@ createAutoComplete({
       <img src="${imgSrc}" />
       ${movie.Title} (${movie.Year})
     `;
+  },
+  onOptionSelect(movie){
+    onMovieSelect(movie);
+  },
+  inputValue(movie){
+    return movie.Title;
+  },
+  async fetchData(searchTerm) {
+    const response = await axios.get('http://www.omdbapi.com/', {
+      params: {
+        apikey: '96326c24',
+        s: searchTerm
+     
+      }
+    });
+    //console.log(response.data);
+    if (response.data.Error) {
+      return [];
+    }
+    return response.data.Search;
+  
   }
 });
 
@@ -75,7 +80,7 @@ const movieTemplate = (movieDetail) => {
   </article>
 
   <article class="notification is-primary">
-  <p class="title">${movieDetail.imbdRating}</p>
+  <p class="title">${movieDetail.imdbRating}</p>
   <p class="subtitle">IMDB Rating</p>
   </article>
 
