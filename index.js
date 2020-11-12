@@ -9,11 +9,11 @@ const fetchData = async (searchTerm) => {
     }
   });
   //console.log(response.data);
-  if(response.data.Error){
+  if (response.data.Error) {
     return [];
   }
   return response.data.Search;
-  
+
 };
 
 const root = document.querySelector('.autocomplete');
@@ -32,31 +32,36 @@ const dropdown = document.querySelector('.dropdown');
 const resultsWrapper = document.querySelector('.results');
 
 const onInput = async e => {
- const movies = await fetchData(e.target.value);
-resultsWrapper.innerHTML=''
- dropdown.classList.add('is-active');
+  const movies = await fetchData(e.target.value);
+if(!movies.length){
+  dropdown.classList.remove('is-active');
+  return;
+}
 
- //console.log(movies);
- for(let mov of movies){
-  const option = document.createElement('a');
+  resultsWrapper.innerHTML = ''
+  dropdown.classList.add('is-active');
 
-  const imgSrc= mov.Poster === 'N/A'? '' : mov.Poster;
-  option.classList.add('dropdown-item');
-  option.innerHTML =` 
+  //console.log(movies);
+  for (let mov of movies) {
+    const option = document.createElement('a');
+
+    const imgSrc = mov.Poster === 'N/A' ? '' : mov.Poster;
+    option.classList.add('dropdown-item');
+    option.innerHTML = ` 
     <img src="${imgSrc}" />
     ${mov.Title}
   `;
- resultsWrapper.appendChild(option);
- }
+    resultsWrapper.appendChild(option);
+  }
 }
 
 input.addEventListener('input', debounce(onInput, 500))
 
-document.addEventListener('click' , event =>{
+document.addEventListener('click', event => {
   //  console.log(event.target);
-if(!root.contains(event.target)){
- dropdown.classList.remove('is-active')
-}
+  if (!root.contains(event.target)) {
+    dropdown.classList.remove('is-active')
+  }
 
 })
 //-------------------------------------------------
