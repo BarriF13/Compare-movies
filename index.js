@@ -51,11 +51,13 @@ if(!movies.length){
     <img src="${imgSrc}" />
     ${movie.Title}
   `;
+  //choosing part 
   option.addEventListener('click', ()=>{
 
     dropdown.classList.remove('is-active');
     input.value = movie.Title;
-  } )
+    onMovieSelect(movie);
+  });
     resultsWrapper.appendChild(option);
   }
 }
@@ -68,7 +70,19 @@ document.addEventListener('click', event => {
     dropdown.classList.remove('is-active')
   }
 
-})
+});
+
+const onMovieSelect = async (movie) =>{
+//console.log(movie);
+ const response = await axios.get('http://www.omdbapi.com/', {
+  params: {
+    apikey: '96326c24',
+     i : movie.imdbID
+    //t: 'Batman'
+  }
+});
+console.log(response.data);
+};
 //-------------------------------------------------
 
 //** Before make it reusable in debounce  */
