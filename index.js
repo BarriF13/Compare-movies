@@ -33,14 +33,19 @@ const resultsWrapper = document.querySelector('.results');
 
 const onInput = async e => {
  const movies = await fetchData(e.target.value);
+
+ dropdown.classList.add('is-active');
+
  //console.log(movies);
  for(let mov of movies){
-  const div = document.createElement('div');
-  div.innerHTML =` 
+  const option = document.createElement('a');
+
+  option.classList.add('dropdown-item');
+  option.innerHTML =` 
     <img src="${mov.Poster}" />
-    <h1>${mov.Title}<h1/>
+    ${mov.Title}
   `;
-  document.querySelector('#target').appendChild(div)
+ resultsWrapper.appendChild(option);
  }
 }
 
