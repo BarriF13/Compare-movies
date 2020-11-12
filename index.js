@@ -1,18 +1,17 @@
 
 
-createAutoComplete({
-  root: document.querySelector('.autocomplete'),
+const autoCompleteConfig = {
   renderOption(movie) {
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
-    return` 
+    return ` 
       <img src="${imgSrc}" />
       ${movie.Title} (${movie.Year})
     `;
   },
-  onOptionSelect(movie){
+  onOptionSelect(movie) {
     onMovieSelect(movie);
   },
-  inputValue(movie){
+  inputValue(movie) {
     return movie.Title;
   },
   async fetchData(searchTerm) {
@@ -20,7 +19,7 @@ createAutoComplete({
       params: {
         apikey: '96326c24',
         s: searchTerm
-     
+
       }
     });
     //console.log(response.data);
@@ -28,8 +27,19 @@ createAutoComplete({
       return [];
     }
     return response.data.Search;
-  
+
   }
+}
+//repeating the autocomplete for left and right
+createAutoComplete({
+  ...autoCompleteConfig,
+  root: document.querySelector('#left-autocomplete')
+
+});
+createAutoComplete({
+  ...autoCompleteConfig,
+  root: document.querySelector('#right-autocomplete')
+
 });
 
 
