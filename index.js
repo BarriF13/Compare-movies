@@ -17,14 +17,16 @@ const fetchData = async (searchTerm) => {
 };
 
 createAutoComplete({
-root: document.querySelector('.autocomplete')
+  root: document.querySelector('.autocomplete'),
+  renderOption(movie) {
+    const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
+    return` 
+      <img src="${imgSrc}" />
+      ${movie.Title} (${movie.Year})
+    `;
+  }
 });
-createAutoComplete({
-root: document.querySelector('.autocomplete-two')
-});
-createAutoComplete({
-root: document.querySelector('.autocomplete-three')
-});
+
 
 const onMovieSelect = async (movie) => {
   //console.log(movie);
@@ -85,27 +87,3 @@ const movieTemplate = (movieDetail) => {
 
 `;
 };
-//-------------------------------------------------
-
-//** Before make it reusable in debounce  */
-// const onInput = e =>{
-//   if(timeoutId){
-//     clearTimeout(timeoutId);
-//   }
-//   timeoutId = setTimeout(()=>{
-//     fetchData (e.target.value);
-//   }, 1000)
-
-// }
-//******* Make a reusable function for even ********* */
-// const debounce = (callback, delay=1000) => {
-//   let timeoutId;
-//   return (...args) => {
-//     if(timeoutId){
-//       clearTimeout(timeoutId);
-//     }
-//     timeoutId = setTimeout(()=>{
-//       callback.apply(null, args);
-//     }, delay)
-//   };
-// };
