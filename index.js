@@ -33,10 +33,10 @@ const resultsWrapper = document.querySelector('.results');
 
 const onInput = async e => {
   const movies = await fetchData(e.target.value);
-if(!movies.length){
-  dropdown.classList.remove('is-active');
-  return;
-}
+  if (!movies.length) {
+    dropdown.classList.remove('is-active');
+    return;
+  }
 
   resultsWrapper.innerHTML = ''
   dropdown.classList.add('is-active');
@@ -51,13 +51,13 @@ if(!movies.length){
     <img src="${imgSrc}" />
     ${movie.Title}
   `;
-  //choosing part 
-  option.addEventListener('click', ()=>{
+    //choosing part 
+    option.addEventListener('click', () => {
 
-    dropdown.classList.remove('is-active');
-    input.value = movie.Title;
-    onMovieSelect(movie);
-  });
+      dropdown.classList.remove('is-active');
+      input.value = movie.Title;
+      onMovieSelect(movie);
+    });
     resultsWrapper.appendChild(option);
   }
 }
@@ -72,16 +72,39 @@ document.addEventListener('click', event => {
 
 });
 
-const onMovieSelect = async (movie) =>{
-//console.log(movie);
- const response = await axios.get('http://www.omdbapi.com/', {
-  params: {
-    apikey: '96326c24',
-     i : movie.imdbID
-    //t: 'Batman'
-  }
-});
-console.log(response.data);
+const onMovieSelect = async (movie) => {
+  //console.log(movie);
+  const response = await axios.get('http://www.omdbapi.com/', {
+    params: {
+      apikey: '96326c24',
+      i: movie.imdbID
+      //t: 'Batman'
+    }
+  });
+  //console.log(response.data);
+  document.querySelector('#summary').innerHTML = movieTemplate(response.data);
+};
+
+const movieTemplate = (movieDetail) => {
+  return `
+  <article class="media">
+    <figure class="media-left">
+      <p class="image">
+        <img src="${movieDetail.Poster}"/>
+      </p>
+    </figure>
+
+    <div class="media-content">
+      <div class="content">
+      <h1>${movieDetail.Title}</h1>
+      <h4>${movieDetail.Genre}</h4>
+      <p>${movieDetail.Plot}</p>
+    </div>
+    </div>
+  </article>
+
+
+`;
 };
 //-------------------------------------------------
 
