@@ -51,6 +51,8 @@ it('After searching , dropdown opens up', () => {
   input.value = 'batman'
   input.dispatchEvent(new Event('input'));
 
+  await waitFor('.dropdown-item');
+  
   const dropdown = document.querySelector('.dropdown');
 
   expect(dropdown.className).to.include('is-active')
