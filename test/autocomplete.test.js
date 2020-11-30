@@ -19,6 +19,7 @@ it('Shows an autocomplete!', () => {
   });
   const dropdown = document.querySelector('.dropdown');
 
-  // if we were using node we could use below 
+  // if we were using node we could use assertation --FOR ASSERTATION IN BROWSER WE USE CHAI
   //asset.strictEquals(dropdown.className , 'dropdown');
+  expect(dropdown.className).not.to.include('is-active')
 });
