@@ -1,11 +1,12 @@
 
 //const createAutoComplete = (config) =>{
 const createAutoComplete = ({
-  root,
-  renderOption,
-  onOptionSelect,
-  inputValue,
-  fetchData }) => {
+  root, // html element that we show autocomp in it
+  renderOption, //fn for rendering each movie
+  onOptionSelect, //fn when we click on any option
+  inputValue, // after choosing throw the title in the input 
+  fetchData // getting the data and look for it in api and data back 
+}) => {
 
   root.innerHTML = `
   <label><b>Search</b></label>
