@@ -27,9 +27,9 @@ beforeEach(() => {
     root: document.querySelector('#target'),
     fetchData() {
       return [
-        { Title: 'Batmen' },
-        { Title: 'Not Batmen' },
-        { Title: 'Some like it hot ' },
+        { Title: 'Batmen -' },
+        { Title: 'Not Batmen -' },
+        { Title: 'Some like it hot - ' },
 
       ];
     },
@@ -74,4 +74,15 @@ it('After searching , dropdown opens up', async () => {
   const dropdown = document.querySelector('.dropdown');
 
   expect(dropdown.className).to.include('is-active')
+});
+
+it('After searching display some results', async () => {
+  const input = document.querySelector('input');
+  input.value = 'batman'
+  input.dispatchEvent(new Event('input'));
+
+  await waitFor('.dropdown-item');
+
+  const items = document.querySelectorAll('.dropdown-item');
+  expect(items.length).to.equal(3)
 });
